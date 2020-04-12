@@ -1,4 +1,5 @@
 node_modules/
+outline/
 .DS_Store
 *.log
 .next/
