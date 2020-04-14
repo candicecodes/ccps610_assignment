@@ -1,0 +1,52 @@
+type department {
+    idDepartment ID! @id
+    deptName String
+    deptDesc String
+    deptImage String
+    # idDepartment tinyint
+    # DeptName varchar(25) ,
+	# DeptDesc varchar(100) ,
+	# DeptImage varchar(25) ,
+	# CONSTRAINT dept_id_pk2 PRIMARY KEY(idDepartment) );
+}
+
+type product {
+    idProduct ID! @id
+    productName String
+    prodDescription String
+    prodImage String
+    price Float
+    saleStart Date
+    saleEnd Date
+    salePrice Float
+    active Int
+    featured Int
+    featureStart Date
+    featureEnd Date
+    productType String
+    idDepartment Int
+    stock Float
+    ordered Int
+    reorder Int
+}
+
+input addProduct {
+    productName String
+    prodDescription String
+    prodImage String
+    price Float
+    active Int
+}
+
+type Mutation {
+    mysql_createProduct(input: addProduct): product
+}
+
+type Query {
+    mysql_getProduct(idProduct: ID!): product
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
