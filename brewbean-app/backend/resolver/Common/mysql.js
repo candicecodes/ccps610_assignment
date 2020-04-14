@@ -43,13 +43,6 @@ exports.getProduct = async (client, idProduct) => {
     if (productFromDb.length == 0) {
         return null;
     }
-    // var postsFromDb = await client.query(`select uuid, text from posts where user_id = ?`, [userFromDb[0].id])
-
-    // user.UUID = userFromDb[0].uuid;
-    // user.Name = userFromDb[0].name;
-
-    // if (postsFromDb.length > 0) {
-    //     user.Posts = postsFromDb.map(function (x) { return { UUID: x.uuid, Text: x.text } });
-    // }
+    
     return user;
 }
