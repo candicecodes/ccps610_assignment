@@ -1,7 +1,12 @@
 node_modules/
+outline/
 .DS_Store
 *.log
 .next/
 .build/
 layout.md
 variables.env
+secrets.json
+*.env
+/.env
+/.serverless
