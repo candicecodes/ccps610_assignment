@@ -26,9 +26,7 @@
     "serverless": "^1.67.3",
     "serverless-mysql": "^1.4.0",
     "serverless-pseudo-parameters": "^2.4.0",
-    "stripe": "^6.12.1",
-    "stripe": "^6.12.1",
-    "serverless-pseudo-parameters": "^2.4.0"
+    "stripe": "^6.12.1"
   },
   "license": "MIT",
   "repository": {

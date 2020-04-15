@@ -18,7 +18,7 @@ provider:
     DB_NAME: ${self:custom.DB_NAME}
     USERNAME: ${self:custom.USERNAME}
     PASSWORD: ${self:custom.PASSWORD}
-    SERVERLESS_ACCESS: ${env:SERVERLESS_ACCESS_KEY}
+    SERVERLESS_ACCESS: ${self.custom.secrets.AccessKey}
 custom:
   DB_NAME: graphql
   USERNAME: master
