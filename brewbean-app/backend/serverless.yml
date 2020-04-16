@@ -18,7 +18,7 @@ provider:
     DB_NAME: ${self:custom.DB_NAME}
     USERNAME: ${self:custom.USERNAME}
     PASSWORD: ${self:custom.PASSWORD}
-    SERVERLESS_ACCESS: ${self.custom.secrets.AccessKey}
+    SERVERLESS_ACCESS: ${file(./secrets.json):AccessKey}
 custom:
   DB_NAME: graphql
   USERNAME: master
@@ -29,25 +29,25 @@ custom:
     PORT:
       Fn::GetAtt: [MySqlRDSInstance, Endpoint.Port]
 
-plugins:
-  - serverless-pseudo-parameters
-resources:
-  Resources:
-    LambdaRole: ${file(./resource/LambdaRole.yml)}
-    ServerlessInternetGateway: ${file(./resource/ServerlessInternetGateway.yml)}
-    ServerlessVPC: ${file(./resource/ServerlessVPC.yml)}
-    ServerlessVPCGA: ${file(./resource/ServerlessVPCGA.yml)}
-    ServerlessSubnetA: ${file(./resource/ServerlessSubnetA.yml)}
-    ServerlessSubnetB: ${file(./resource/ServerlessSubnetB.yml)}
-    ServerlessSubnetC: ${file(./resource/ServerlessSubnetC.yml)}
-    ServerlessSubnetGroup: ${file(./resource/ServerlessSubnetGroup.yml)}
-    ServerlessSecurityGroup: ${file(./resource/ServerlessSecurityGroup.yml)}
-    RouteTablePublic: ${file(./resource/RouteTablePublic.yml)}
-    RoutePublic: ${file(./resource/RoutePublic.yml)}
-    RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
-    RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
-    RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
-    MySqlRDSInstance: ${file(./resource/MySqlRDSInstance.yml)}
+# plugins:
+#   - serverless-pseudo-parameters
+# resources:
+#   Resources:
+#     LambdaRole: ${file(./resource/LambdaRole.yml)}
+#     ServerlessInternetGateway: ${file(./resource/ServerlessInternetGateway.yml)}
+#     ServerlessVPC: ${file(./resource/ServerlessVPC.yml)}
+#     ServerlessVPCGA: ${file(./resource/ServerlessVPCGA.yml)}
+#     ServerlessSubnetA: ${file(./resource/ServerlessSubnetA.yml)}
+#     ServerlessSubnetB: ${file(./resource/ServerlessSubnetB.yml)}
+#     ServerlessSubnetC: ${file(./resource/ServerlessSubnetC.yml)}
+#     ServerlessSubnetGroup: ${file(./resource/ServerlessSubnetGroup.yml)}
+#     ServerlessSecurityGroup: ${file(./resource/ServerlessSecurityGroup.yml)}
+#     RouteTablePublic: ${file(./resource/RouteTablePublic.yml)}
+#     RoutePublic: ${file(./resource/RoutePublic.yml)}
+#     RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
+#     RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
+#     RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
+#     MySqlRDSInstance: ${file(./resource/MySqlRDSInstance.yml)}
 
     
 functions:

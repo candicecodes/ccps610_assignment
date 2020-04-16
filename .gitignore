@@ -1,5 +1,6 @@
 node_modules/
 outline/
+clone/
 .DS_Store
 *.log
 .next/
@@ -9,4 +10,4 @@ variables.env
 *secrets.json
 *.env
 /.env
-/.serverless
+*.serverless
