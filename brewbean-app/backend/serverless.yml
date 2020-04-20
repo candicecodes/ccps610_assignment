@@ -1,36 +1,45 @@
 org: candicecodes
-app: my-first-app
+app: brewbean
 
-service: ${file(./secrets.json):ApiName}
+# service: ${file(./secrets.json):ApiName}
+service: serverless-graphql-rds
 
 provider:
   name: aws
-  region: us-east-1
+  region: ca-central-1
   stage: dev
   memorySize: 256
   runtime: nodejs12.x
-  role: LambdaRole
-  environment:
+  # role: LambdaRole
+  iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "secretsmanager:GetSecretValue"
+        Resource: "arn:aws:secretsmanager:ca-central-1:817666344894:secret:database-1-masterpassword-wBwMj9"
+  # environment:
     #mysql
-    MYSQL_HOST: ${self:custom.MYSQL.HOST}
-    MYSQL_PORT: ${self:custom.MYSQL.PORT}
+    # MYSQL_HOST: ${file(./secrets.json):DatabaseHost}
+    # MYSQL_PORT: ${file(./secrets.json):DatabasePort}
     #common
-    DB_NAME: ${self:custom.DB_NAME}
-    USERNAME: ${self:custom.USERNAME}
-    PASSWORD: ${self:custom.PASSWORD}
-    SERVERLESS_ACCESS: ${file(./secrets.json):AccessKey}
-custom:
-  DB_NAME: graphql
-  USERNAME: master
-  PASSWORD: password
-  MYSQL:
-    HOST:
-      Fn::GetAtt: [MySqlRDSInstance, Endpoint.Address]
-    PORT:
-      Fn::GetAtt: [MySqlRDSInstance, Endpoint.Port]
+    # DB_NAME: ${file(./secrets.json):DatabaseName}
+    # USERNAME: ${self:custom.USERNAME}
+    # PASSWORD: ${self:custom.PASSWORD}
+    # SERVERLESS_ACCESS: ${file(./secrets.json):AccessKey}
+# custom:
+  # SECRETS: 
+  # DB_NAME: ${file(./secrets.json):DatabaseName}
+  # USERNAME: master
+  # PASSWORD: password
+  # MYSQL:
+    # HOST:
+      # Fn::GetAtt: [MySqlRDSInstance, Endpoint.Address]
+      # Fn::GetAtt: [${file(./resource/MySqlRDSInstance.yml)}, Endpoint.Address]
+    # PORT:
+      # Fn::GetAtt: [MySqlRDSInstance, Endpoint.Port]
 
-# plugins:
-#   - serverless-pseudo-parameters
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-offline
 # resources:
 #   Resources:
 #     LambdaRole: ${file(./resource/LambdaRole.yml)}
@@ -47,10 +56,11 @@ custom:
 #     RouteTableAssociationSubnetA: ${file(./resource/RouteTableAssociationSubnetA.yml)}
 #     RouteTableAssociationSubnetB: ${file(./resource/RouteTableAssociationSubnetB.yml)}
 #     RouteTableAssociationSubnetC: ${file(./resource/RouteTableAssociationSubnetC.yml)}
-#     MySqlRDSInstance: ${file(./resource/MySqlRDSInstance.yml)}
+    # MySqlRDSInstance: ${file(./resource/MySqlRDSInstance.yml)}
 
     
 functions:
+
   graphql:
     handler: handler.server
     events:

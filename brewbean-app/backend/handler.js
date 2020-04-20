@@ -1,7 +1,11 @@
 // need the server later on
 
+
 const { GraphQLServerLambda } = require("graphql-yoga");
 var fs = require("fs")
+
+
+
 
 const typeDefs = fs.readFileSync("./schema.gql").toString('utf-8');
 

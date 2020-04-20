@@ -1,15 +1,15 @@
 DependsOn: ServerlessVPCGA
 Type: AWS::RDS::DBInstance
 Properties:
-  MasterUsername: ${self:custom.USERNAME}
-  MasterUserPassword: ${self:custom.PASSWORD}
+  MasterUsername: ${file(./secrets.json):DbMasterUser}
+  MasterUserPassword: ${file(./secrets.json):DbMasterPass}
   AllocatedStorage: 20
-  DBName: ${self:custom.DB_NAME}
+  DBName: ${file(./secrets.json):DatabaseName}
   DBInstanceClass: db.t2.micro
   VPCSecurityGroups:
   - !GetAtt ServerlessSecurityGroup.GroupId
   DBSubnetGroupName:
     Ref: ServerlessSubnetGroup
   Engine: mysql
-  EngineVersion: "5.6.41"
+  EngineVersion: "5.7.26"
   PubliclyAccessible: true
