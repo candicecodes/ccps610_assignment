@@ -109,4 +109,5 @@ functions:
       - http:
           path: /
           method: get
+          integration: lambda
   

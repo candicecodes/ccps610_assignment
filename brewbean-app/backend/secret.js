@@ -63,5 +63,5 @@ client.getSecretValue({SecretId: secretName}, function(err, data) {
     // Your code goes here. 
 });
 
-    }
+}
 
