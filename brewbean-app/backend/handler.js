@@ -2,8 +2,40 @@
 
 
 const { GraphQLServerLambda } = require("graphql-yoga");
-var fs = require("fs")
+var fs = require("fs");
+const { readFileSync } = require("fs");
 
+// const path = require('path');
+
+const secretManager = require('./secret');
+
+module.exports.hello = (event, context, callback) => {
+
+    secretManager.secretManager("database-1-masterpassword");
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify({
+            message: 'Go Seerverless! your function executed successfully',
+            input: event,
+        }),
+    }
+};
+
+const manageFile = require('./manageFile');
+
+module.exports.appendText = (event, context, callback) => {
+
+    manageFile.appendText(text).then(result => {
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify({
+                result
+            })
+        };
+
+    callback(null, response);
+    });
+};
 
 
 
@@ -25,3 +57,4 @@ const lambda = new GraphQLServerLambda({
 
 exports.server = lambda.graphqlHandler;
 exports.playground = lambda.playgroundHandler;
+

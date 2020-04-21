@@ -4,13 +4,17 @@
 
 // Load the AWS SDK
 var AWS = require('aws-sdk'),
-    endpoint: "https://secretsmanager.ca-central-1.amazonaws.com",
+    endpoint = "https://secretsmanager.ca-central-1.amazonaws.com",
     region = "ca-central-1",
     secretName = "database-1-masterpassword",
     secret,
     decodedBinarySecret;
 
-// Create a Secrets Manager client
+
+    module.exports.secretManager = (secretName) => {
+        
+        // DELETE THIS METHOD AFTER TESTING AND MOVE THE BELOW BACK OUTSIDE
+        // Create a Secrets Manager client
 var client = new AWS.SecretsManager({
     endpoint: endpoint,
     region: region
@@ -48,6 +52,8 @@ client.getSecretValue({SecretId: secretName}, function(err, data) {
         // Depending on whether the secret is a string or binary, one of these fields will be populated.
         if ('SecretString' in data) {
             secret = data.SecretString;
+            // REMOVE THIS AFTER TESTING 
+            console.log('mY secret is: ' + secret);
         } else {
             let buff = new Buffer(data.SecretBinary, 'base64');
             decodedBinarySecret = buff.toString('ascii');
@@ -56,3 +62,6 @@ client.getSecretValue({SecretId: secretName}, function(err, data) {
     
     // Your code goes here. 
 });
+
+    }
+

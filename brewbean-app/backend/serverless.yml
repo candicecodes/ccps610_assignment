@@ -15,7 +15,12 @@ provider:
       - Effect: "Allow"
         Action:
           - "secretsmanager:GetSecretValue"
-        Resource: "arn:aws:secretsmanager:ca-central-1:817666344894:secret:database-1-masterpassword-wBwMj9"
+          - "s3:ListBucket"
+          - "s3:GetObject"
+          - "s3:PutObject"
+        Resource: 
+          - "arn:aws:secretsmanager:ca-central-1:817666344894:secret:database-1-masterpassword-wBwMj9"
+          - "arn:aws:s3:::brewbean-operations-bucket/*"
   # environment:
     #mysql
     # MYSQL_HOST: ${file(./secrets.json):DatabaseHost}
@@ -25,7 +30,15 @@ provider:
     # USERNAME: ${self:custom.USERNAME}
     # PASSWORD: ${self:custom.PASSWORD}
     # SERVERLESS_ACCESS: ${file(./secrets.json):AccessKey}
-# custom:
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'   # Name of webpack configuration file
+    includeModules:
+      packagePath: './package.json'
+      forceExclude:
+        - aws-sdk
+    packager: 'npm'   # Packager that will be used to package your external modules
+    excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
   # SECRETS: 
   # DB_NAME: ${file(./secrets.json):DatabaseName}
   # USERNAME: master
@@ -36,12 +49,20 @@ provider:
       # Fn::GetAtt: [${file(./resource/MySqlRDSInstance.yml)}, Endpoint.Address]
     # PORT:
       # Fn::GetAtt: [MySqlRDSInstance, Endpoint.Port]
-
+package:
+  individually: true
+  # exclude:
+  #   - node_modules/**
+  #   - '!node_modules/graphql-yoga/**'
+  #   - '!node_modules/apollo-server-express/**'
+  #   - '!node_modules/apollo-server-core/**'
 plugins:
   - serverless-pseudo-parameters
   - serverless-offline
-# resources:
-#   Resources:
+  - serverless-webpack
+resources:
+  Resources:
+    S3OperationsBucket: ${file(./resource/AwsS3Bucket.yml)}
 #     LambdaRole: ${file(./resource/LambdaRole.yml)}
 #     ServerlessInternetGateway: ${file(./resource/ServerlessInternetGateway.yml)}
 #     ServerlessVPC: ${file(./resource/ServerlessVPC.yml)}
@@ -75,3 +96,17 @@ functions:
           path: /
           method: get
           cors: true
+  appendText:
+    handler: handler.appendText
+    events:
+      - http:
+          path: appendText
+          method: put
+  # DELETE THE BELOW AFTER SECRET TEST
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: /
+          method: get
+  
