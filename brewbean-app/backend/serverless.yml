@@ -57,9 +57,12 @@ package:
   #   - '!node_modules/apollo-server-express/**'
   #   - '!node_modules/apollo-server-core/**'
 plugins:
+  # webpack has to be listed before offline, because that detemines the order of execution
+  # https://github.com/serverless-heaven/serverless-webpack/issues/230#issuecomment-344430019
+  - serverless-webpack
   - serverless-pseudo-parameters
   - serverless-offline
-  - serverless-webpack
+  
 resources:
   Resources:
     S3OperationsBucket: ${file(./resource/AwsS3Bucket.yml)}

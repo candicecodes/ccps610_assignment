@@ -4,6 +4,8 @@
 const webpack = require('webpack')
 const slsw = require('serverless-webpack');
 const BbPromise = require('bluebird');
+const path = require('path');
+
 
 module.exports = BbPromise.try(() => {
     return slsw.lib.serverless.providers.aws.getAccountId()
@@ -16,8 +18,24 @@ module.exports = BbPromise.try(() => {
             }),
         ],
         module: {
-            // 
-            // GOTTA DO SOMETHING WITH LOADERS HERE TOMORROW
+            
         }
     }));
 });
+
+// module.exports = {
+//     module: {
+//         rules: [
+//             {
+//                 test: /\.(graphql|gql)$/,
+//                 exclude: /node_modules/,
+//                 use: {
+//                     loader: 'gql-loader',
+//                     options: {
+//                     baseDir: path.resolve(`${__dirname}`)
+//     }
+//   }
+//             }
+//         ]
+//     }
+// }

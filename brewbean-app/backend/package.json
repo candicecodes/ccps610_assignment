@@ -2,7 +2,7 @@
   "name": "brewbean-backend",
   "description": "The backend of Brewbean built with NodeJS, MySQL, serverless, and AWS",
   "scripts": {
-    "start": "nodemon -e js,graphql -x node src/index.js",
+    "start": "concurrently \"nodemon -e js,graphql -x node src/index.js\"  \"rm -rf ./node_modules/.cache/babel-loader && node index.js\"",
     "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
     "test": "jest",
     "func": "serverless deploy function --function graphql",
@@ -13,8 +13,11 @@
     "apollo-server-express": "2.12.0",
     "babel-preset-env": "1.7.0",
     "bcryptjs": "2.4.3",
+    "bufferutil": "^4.0.1",
     "cookie-parser": "1.4.5",
     "dotenv": "8.2.0",
+    "glob": "^7.1.6",
+    "gql-loader": "^1.0.0",
     "graphql": "15.0.0",
     "graphql-cli": "3.0.14",
     "graphql-yoga": "1.18.3",
@@ -34,14 +37,22 @@
   "babel": {
     "presets": [
       "env"
-    ]
+    ],
+    "env": {
+      "development": {
+        "plugins": ["import-graphql"]
+      }
+    }
   },
   "devDependencies": {
     "aws-sdk": "2.658.0",
+    "babel-plugin-import-graphql": "^2.7.0",
+    "concurrently": "^5.1.0",
     "serverless": "1.67.3",
     "serverless-mysql": "1.5.4",
     "serverless-offline": "6.1.4",
     "serverless-pseudo-parameters": "2.5.0",
-    "serverless-webpack": "^5.3.1"
+    "serverless-webpack": "^5.3.1",
+    "webpack-node-externals": "^1.7.2"
   }
 }
