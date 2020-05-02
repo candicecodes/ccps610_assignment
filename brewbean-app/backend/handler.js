@@ -8,7 +8,7 @@ const glob = require("glob");
 
 const path = require('path');
 const { importSchema } = require('graphql-import');
-import schema from './schema.gql';
+// import schema from './schema.gql';
 const secretManager = require('./secret');
 
 // const testing = dirname('__dirname');
@@ -29,7 +29,7 @@ module.exports.hello = (event, context, callback) => {
     const response = {
         statusCode: 200,
         body: JSON.stringify({
-            message: `Go Seerverless! your function executed successfully and where is my file?`,
+            message: 'Go Seerverless! your function executed successfully and where is my file?',
             input: event,
         }),
     };
@@ -55,7 +55,7 @@ module.exports.appendText = (event, context, callback) => {
 
 
 // const typeDefs = fs.readFileSync("./schema.gql").toString('utf-8');
-const typeDefs = fs.readFileSync(schema).toString('utf-8');
+// const typeDefs = fs.readFileSync(schema).toString('utf-8');
 
 // const typeDefs = fs.readFileSync(path.join("./", "schema.graphql", toString("utf8")));
 // const typeDefs = importSchema('brew-app/backend/schema.gql');
@@ -73,7 +73,7 @@ const resolvers = {
 };
 
 const lambda = new GraphQLServerLambda({
-    typeDefs,
+    // typeDefs,
     resolvers
 });
 
