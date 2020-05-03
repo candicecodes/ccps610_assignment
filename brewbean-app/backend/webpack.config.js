@@ -20,18 +20,18 @@ module.exports = BbPromise.try(() => {
             }),
         ],
         module: {
-            // rules: [
-            //             {
-            //                 test: /\.(graphql|gql)$/,
-            //                 exclude: /node_modules/,
-            //                 use: {
-            //                     loader: 'gql-loader',
-            //                     options: {
-            //                     baseDir: path.resolve(`${__dirname}`)
-            //                     }
-            //                 }
-            //             }
-            // ],
+            rules: [
+                        {
+                            test: /\.(graphql|gql)$/,
+                            exclude: /node_modules/,
+                            use: {
+                                loader: 'gql-loader',
+                                options: {
+                                baseDir: path.resolve(`${__dirname}`)
+                                }
+                            }
+                        }
+            ],
         }
     }));
 });

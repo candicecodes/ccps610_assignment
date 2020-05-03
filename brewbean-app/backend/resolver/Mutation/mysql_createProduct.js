@@ -1,14 +1,15 @@
 // const uuidv4 = require('uuid/v4');
-var common = require('../Common/mysql')
-const Client = require('serverless-mysql')
+var common = require('../Common/mysql');
+const Client = require('serverless-mysql');
+var secret = require('../../secret');
 
 exports.func = async (_, obj) => {
     var client = Client({
         config: {
-            host: process.env.MYSQL_HOST,
-            database: process.env.DB_NAME,
-            user: process.env.USERNAME,
-            password: process.env.PASSWORD
+            host: secret['host'],
+            database: secret['dbInstanceIdentifier'],
+            user: secret['username'],
+            password: secret['password']
         }
     })
     await common.init(client)

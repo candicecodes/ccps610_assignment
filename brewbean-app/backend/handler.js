@@ -8,8 +8,8 @@ const glob = require("glob");
 
 const path = require('path');
 const { importSchema } = require('graphql-import');
-// import schema from './schema.gql';
-const secretManager = require('./secret');
+import schema from './schema.gql';
+// const secretManager = require('./secret');
 
 // const testing = dirname('__dirname');
 // const testing = process.cwd();
@@ -24,38 +24,38 @@ const secretManager = require('./secret');
 
 
 
-module.exports.hello = (event, context, callback) => {
-    secretManager.secretManager("database-1-masterpassword");
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: 'Go Seerverless! your function executed successfully and where is my file?',
-            input: event,
-        }),
-    };
-    callback(null, response);
-};
+// module.exports.hello = (event, context, callback) => {
+//     secretManager.secretManager("database-1-masterpassword");
+//     const response = {
+//         statusCode: 200,
+//         body: JSON.stringify({
+//             message: 'Go Seerverless! your function executed successfully and where is my file?',
+//             input: event,
+//         }),
+//     };
+//     callback(null, response);
+// };
 
 const manageFile = require('./manageFile');
 
-module.exports.appendText = (event, context, callback) => {
+// module.exports.appendText = (event, context, callback) => {
 
-    manageFile.appendText(text).then(result => {
-        const response = {
-            statusCode: 200,
-            body: JSON.stringify({
-                result
-            })
-        };
+//     manageFile.appendText(text).then(result => {
+//         const response = {
+//             statusCode: 200,
+//             body: JSON.stringify({
+//                 result
+//             })
+//         };
 
-    callback(null, response);
-    });
-};
+//     callback(null, response);
+//     });
+// };
 
 
 
 // const typeDefs = fs.readFileSync("./schema.gql").toString('utf-8');
-// const typeDefs = fs.readFileSync(schema).toString('utf-8');
+const typeDefs = fs.readFileSync(schema).toString('utf-8');
 
 // const typeDefs = fs.readFileSync(path.join("./", "schema.graphql", toString("utf8")));
 // const typeDefs = importSchema('brew-app/backend/schema.gql');
@@ -73,7 +73,7 @@ const resolvers = {
 };
 
 const lambda = new GraphQLServerLambda({
-    // typeDefs,
+    typeDefs,
     resolvers
 });
 

@@ -22,9 +22,9 @@ provider:
           - "arn:aws:secretsmanager:ca-central-1:817666344894:secret:database-1-masterpassword-wBwMj9"
           - "arn:aws:s3:::brewbean-operations-bucket/*"
   # environment:
-    #mysql
-    # MYSQL_HOST: ${file(./secrets.json):DatabaseHost}
-    # MYSQL_PORT: ${file(./secrets.json):DatabasePort}
+  #   mysql
+  #   MYSQL_HOST: '{{resolve:secretsmanager:database-1-masterpassword:}}'
+  #   MYSQL_PORT: ${file(./secrets.json):DatabasePort}
     #common
     # DB_NAME: ${file(./secrets.json):DatabaseName}
     # USERNAME: ${self:custom.USERNAME}
